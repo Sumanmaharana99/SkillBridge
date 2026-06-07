@@ -3,6 +3,7 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import sessionRoutes from './routes/sessionRoutes.js';
+import creditRoutes from './routes/creditRoutes.js';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,4 +14,5 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/sessions',sessionRoutes);
+app.use('/api/credits',creditRoutes);
 export default app;

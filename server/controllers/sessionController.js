@@ -1,6 +1,6 @@
 import Session from "../models/Session.js";
 import User from "../models/User.js";
-
+import Transaction from "../models/Transaction.js";
 export const bookSession = async(req,res)=>{
     try{
         const {mentorId,skill,date} = req.body;
@@ -26,6 +26,13 @@ export const bookSession = async(req,res)=>{
         });
         learner.credits -= 10;
         await learner.save();
+        await Transaction.create({
+            userId: req.user._id,
+            amount: 10,
+            type: "spent",
+            sessionId: session._id,
+            description: "Booked learning session"
+        });
         res.status(201).json({
             success:true,
             message:"Session booked successfully",
@@ -70,6 +77,18 @@ export const updateSessionStatus=async(req,res)=>{
       });
     }
         session.status = req.body.status;
+        if(req.body.status === "completed"){
+          const mentor = await User.findById(session.mentorId);
+          mentor.credits += 10;
+          await mentor.save();
+          await Transaction.create({
+            userId: session.mentorId,
+            amount: 10,
+            type: "earned",
+            sessionId: session._id,
+            description: "Completed teaching session"
+          });
+        }
         await session.save();
         res.status(200).json({
             success:true,
