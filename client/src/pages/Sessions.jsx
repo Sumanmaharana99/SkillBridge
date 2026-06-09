@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
-
+import MainLayout from "../layouts/MainLayout";
 function Sessions() {
   const [sessions, setSessions] = useState([]);
 
@@ -21,34 +21,61 @@ function Sessions() {
     }
   };
 
-  return (
-    <div>
-      <h1>My Sessions</h1>
+ return (
+  <MainLayout>
+    <h1 className="text-3xl font-bold mb-6">
+      My Sessions
+    </h1>
 
-      {sessions.map((session) => (
-        <div key={session._id}>
-          <h3>{session.skill}</h3>
+    <div className="bg-white rounded-xl shadow overflow-hidden">
+      <table className="w-full">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="p-4 text-left">Skill</th>
+            <th className="p-4 text-left">Mentor</th>
+            <th className="p-4 text-left">Learner</th>
+            <th className="p-4 text-left">Status</th>
+          </tr>
+        </thead>
 
-          <p>
-            Status:
-            {session.status}
-          </p>
+        <tbody>
+          {sessions.map((session) => (
+            <tr
+              key={session._id}
+              className="border-t"
+            >
+              <td className="p-4">
+                {session.skill}
+              </td>
 
-          <p>
-            Mentor:
-            {session.mentorId?.name}
-          </p>
+              <td className="p-4">
+                {session.mentorId?.name}
+              </td>
 
-          <p>
-            Learner:
-            {session.learnerId?.name}
-          </p>
+              <td className="p-4">
+                {session.learnerId?.name}
+              </td>
 
-          <hr />
-        </div>
-      ))}
+              <td className="p-4">
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    session.status === "completed"
+                      ? "bg-green-100 text-green-700"
+                      : session.status === "pending"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {session.status}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  );
+  </MainLayout>
+);
 }
 
 export default Sessions;

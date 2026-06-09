@@ -12,7 +12,6 @@ function App(){
   return (
     <BrowserRouter>
       <Routes>
-
         <Route
           path="/"
           element={<Login />}
@@ -73,6 +72,7 @@ function App(){
 />
       </Routes>
     </BrowserRouter>
+    
   )
 }
 export default App;

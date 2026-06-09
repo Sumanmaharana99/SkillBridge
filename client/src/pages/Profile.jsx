@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
-
+import MainLayout from "../layouts/MainLayout";
 function Profile() {
   const [formData, setFormData] = useState({
     bio: "",
@@ -70,66 +70,92 @@ function Profile() {
   };
 
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="max-w-3xl mx-auto">
+  <h1 className="text-3xl font-bold mb-6">
+    My Profile
+  </h1>
 
-      <form onSubmit={handleSubmit}>
+  <div className="bg-white p-8 rounded-xl shadow">
 
-        <textarea
-          name="bio"
-          placeholder="Bio"
-          value={formData.bio}
-          onChange={handleChange}
-        />
+    <div className="mb-4">
+      <label className="block mb-2 font-medium">
+        Bio
+      </label>
 
-        <br /><br />
-
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="availability"
-          placeholder="Availability"
-          value={formData.availability}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="skillsTeach"
-          placeholder="Skills Teach"
-          value={formData.skillsTeach}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="skillsLearn"
-          placeholder="Skills Learn"
-          value={formData.skillsLearn}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Update Profile
-        </button>
-
-      </form>
+      <textarea
+        name="bio"
+        value={formData.bio}
+        onChange={handleChange}
+        className="w-full border p-3 rounded-lg"
+        rows="4"
+      />
     </div>
+
+    <div className="mb-4">
+      <label className="block mb-2 font-medium">
+        Location
+      </label>
+
+      <input
+        type="text"
+        name="location"
+        value={formData.location}
+        onChange={handleChange}
+        className="w-full border p-3 rounded-lg"
+      />
+    </div>
+
+    <div className="mb-4">
+      <label className="block mb-2 font-medium">
+        Availability
+      </label>
+
+      <input
+        type="text"
+        name="availability"
+        value={formData.availability}
+        onChange={handleChange}
+        className="w-full border p-3 rounded-lg"
+      />
+    </div>
+
+    <div className="mb-4">
+      <label className="block mb-2 font-medium">
+        Skills I Teach
+      </label>
+
+      <input
+        type="text"
+        name="skillsTeach"
+        value={formData.skillsTeach}
+        onChange={handleChange}
+        className="w-full border p-3 rounded-lg"
+      />
+    </div>
+
+    <div className="mb-6">
+      <label className="block mb-2 font-medium">
+        Skills I Want To Learn
+      </label>
+
+      <input
+        type="text"
+        name="skillsLearn"
+        value={formData.skillsLearn}
+        onChange={handleChange}
+        className="w-full border p-3 rounded-lg"
+      />
+    </div>
+
+    <button
+      onClick={handleSubmit}
+      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+    >
+      Update Profile
+    </button>
+
+  </div>
+</div>
   );
 }
 

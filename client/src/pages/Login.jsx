@@ -44,35 +44,53 @@ function Login() {
     }
   };
 
-  return (
-    <div>
-      <h1>Login</h1>
+return (
+  <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        SkillSwap Login
+      </h1>
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
+        <div className="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <br /><br />
+        <div className="mb-6">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+        >
           Login
         </button>
       </form>
+      <p className="text-center mt-4 text-gray-600">
+        Don't have an account?
+        <span
+          onClick={() => navigate("/register")}
+          className="text-blue-600 cursor-pointer ml-1"
+        >
+          Register
+        </span>
+      </p>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
