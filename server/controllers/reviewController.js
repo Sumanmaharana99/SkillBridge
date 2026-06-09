@@ -39,7 +39,10 @@ export const createReview = async(req,res)=>{
             rating,
             review
         })
-        const avgRating = review.reduce((sum,item)=>sum+item.rating,0)/reviews.length;
+        const reviews = await Review.find({
+  mentorId: session.mentorId,
+});
+        const avgRating = reviews.reduce((sum,item)=>sum+item.rating,0)/reviews.length;
 
         await User.findByIdAndUpdate(session.mentorId,{rating:avgRating.toFixed(1)});
          res.status(201).json({

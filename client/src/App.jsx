@@ -5,6 +5,9 @@ import Dashboard from './pages/Dashboard';
 import Profile from "./pages/Profile";
 import ProtectedRoutes from './components/ProtectedRoutes';
 import SearchMentors from './pages/SearchMentors';
+import Sessions from './pages/Sessions';
+import Credits from './pages/Credits';
+import Reviews from './pages/Reviews';
 function App(){
   return (
     <BrowserRouter>
@@ -44,7 +47,30 @@ function App(){
     </ProtectedRoutes>
   }
 />
-        
+      <Route
+  path="/sessions"
+  element={
+    <ProtectedRoutes>
+      <Sessions />
+    </ProtectedRoutes>
+  }
+/>  
+<Route
+  path="/credits"
+  element={
+    <ProtectedRoutes>
+      <Credits />
+    </ProtectedRoutes>
+  }
+/>
+<Route
+  path="/reviews"
+  element={
+    <ProtectedRoutes>
+      <Reviews />
+    </ProtectedRoutes>
+  }
+/>
       </Routes>
     </BrowserRouter>
   )
