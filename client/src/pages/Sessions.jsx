@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
 import MainLayout from "../layouts/MainLayout";
+import { useNavigate } from "react-router-dom";
 function Sessions() {
   const [sessions, setSessions] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchSessions();
   }, []);
@@ -35,6 +36,7 @@ function Sessions() {
             <th className="p-4 text-left">Mentor</th>
             <th className="p-4 text-left">Learner</th>
             <th className="p-4 text-left">Status</th>
+            <th className="p-4 text-left">Action</th>
           </tr>
         </thead>
 
@@ -69,6 +71,18 @@ function Sessions() {
                   {session.status}
                 </span>
               </td>
+              <td className="p-4">
+  {session.status === "completed" && (
+    <button
+      onClick={() =>
+        navigate(`/reviews/${session._id}`)
+      }
+      className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700"
+    >
+      Review
+    </button>
+  )}
+</td>
             </tr>
           ))}
         </tbody>

@@ -63,7 +63,7 @@ function App(){
   }
 />
 <Route
-  path="/reviews"
+  path="/reviews/:sessionId"
   element={
     <ProtectedRoutes>
       <Reviews />
