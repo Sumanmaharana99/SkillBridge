@@ -76,19 +76,30 @@ export const updateSessionStatus=async(req,res)=>{
         message: "Invalid status",
       });
     }
-        session.status = req.body.status;
-        if(req.body.status === "completed"){
-          const mentor = await User.findById(session.mentorId);
-          mentor.credits += 10;
-          await mentor.save();
-          await Transaction.create({
-            userId: session.mentorId,
-            amount: 10,
-            type: "earned",
-            sessionId: session._id,
-            description: "Completed teaching session"
-          });
-        }
+       
+       //prevent duplicate credit bug
+        if (
+  req.body.status === "completed" &&
+  session.status !== "completed"
+) {
+  const mentor = await User.findById(
+    session.mentorId
+  );
+
+  mentor.credits += 10;
+
+  await mentor.save();
+
+  await Transaction.create({
+    userId: session.mentorId,
+    amount: 10,
+    type: "earned",
+    sessionId: session._id,
+    description:
+      "Completed teaching session",
+  });
+}
+ session.status = req.body.status;
         await session.save();
         res.status(200).json({
             success:true,

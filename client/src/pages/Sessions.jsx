@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import API from "../api/axios";
 import MainLayout from "../layouts/MainLayout";
 import { useNavigate } from "react-router-dom";
+
 function Sessions() {
   const [sessions, setSessions] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null)
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchSessions();
+    fetchCurrentUser();
   }, []);
 
   const fetchSessions = async () => {
@@ -21,7 +25,26 @@ function Sessions() {
       console.log(error);
     }
   };
+  const fetchCurrentUser=async()=>{
+    try{
+      const res = await API.get('/auth/me');
+      setCurrentUser(res.data.user);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
 
+  const updateStatus= async(sessionId,status)=>{
+    try{
+      await API.patch(`/sessions/${sessionId}/status`,{status});
+      fetchSessions();
+    }
+    catch(error){
+      console.log(error);
+      alert("Failed to update session");
+    }
+  }
  return (
   <MainLayout>
     <h1 className="text-3xl font-bold mb-6">
@@ -59,29 +82,61 @@ function Sessions() {
               </td>
 
               <td className="p-4">
-                <span
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    session.status === "completed"
-                      ? "bg-green-100 text-green-700"
-                      : session.status === "pending"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  {session.status}
-                </span>
-              </td>
+  <span
+    className={`px-3 py-1 rounded-full text-sm ${
+      session.status === "completed"
+        ? "bg-green-100 text-green-700"
+        : session.status === "accepted"
+        ? "bg-blue-100 text-blue-700"
+        : session.status === "pending"
+        ? "bg-yellow-100 text-yellow-700"
+        : "bg-red-100 text-red-700"
+    }`}
+  >
+    {session.status}
+  </span>
+</td>
               <td className="p-4">
-  {session.status === "completed" && (
-    <button
-      onClick={() =>
-        navigate(`/reviews/${session._id}`)
-      }
-      className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700"
-    >
-      Review
-    </button>
-  )}
+
+  {currentUser &&
+    session.mentorId?._id === currentUser._id &&
+    session.status === "pending" && (
+      <button
+        onClick={() =>
+          updateStatus(session._id, "accepted")
+        }
+        className="bg-blue-600 text-white px-3 py-1 rounded-lg"
+      >
+        Accept
+      </button>
+    )}
+
+  {currentUser &&
+    session.mentorId?._id === currentUser._id &&
+    session.status === "accepted" && (
+      <button
+        onClick={() =>
+          updateStatus(session._id, "completed")
+        }
+        className="bg-green-600 text-white px-3 py-1 rounded-lg"
+      >
+        Complete
+      </button>
+    )}
+
+  {currentUser &&
+    session.learnerId?._id === currentUser._id &&
+    session.status === "completed" && (
+      <button
+        onClick={() =>
+          navigate(`/reviews/${session._id}`)
+        }
+        className="bg-blue-600 text-white px-3 py-1 rounded-lg"
+      >
+        Review
+      </button>
+    )}
+
 </td>
             </tr>
           ))}
