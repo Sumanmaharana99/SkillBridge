@@ -19,6 +19,6 @@ router.get("/google/callback",passport.authenticate("google",{
     session:false,failureRedirect:"/"
 }),(req,res)=>{
     const token = generateToken(req.user._id)
-    res.redirect(`http://localhost:5173/oauth-success?token=${token}`)
+    res.redirect( `https://skill-bridge-sage-three.vercel.app/oauth-success?token=${token}`)
 })
 export default router;

@@ -90,7 +90,7 @@ return (
   type="button"
   onClick={() => {
     window.location.href =
-      "http://localhost:5000/api/auth/google";
+       "https://skillbridge-k59b.onrender.com/api/auth/google";
   }}
   className="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-50"
 >
