@@ -24,9 +24,12 @@ function Register() {
         formData
       );
 
-      console.log(res.data);
-
       alert("Registration Successful");
+      localStorage.setItem(
+      "token",
+      res.data.token
+    );
+      navigate("/dashboard");
 
     } catch (error) {
       console.log(error.response?.data);

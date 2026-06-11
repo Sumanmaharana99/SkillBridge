@@ -52,6 +52,16 @@ function Sessions() {
     </h1>
 
     <div className="bg-white rounded-xl shadow overflow-hidden">
+      {sessions.length === 0 ? (
+    <div className="p-10 text-center">
+      <h2 className="text-xl font-semibold text-gray-700">
+        No Sessions Found
+      </h2>
+      <p className="text-gray-500 mt-2">
+        You don't have any sessions yet.
+      </p>
+    </div>
+  ) :(
       <table className="w-full">
         <thead className="bg-gray-100">
           <tr>
@@ -142,6 +152,7 @@ function Sessions() {
           ))}
         </tbody>
       </table>
+   )}
     </div>
   </MainLayout>
 );
