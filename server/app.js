@@ -6,10 +6,11 @@ import sessionRoutes from './routes/sessionRoutes.js';
 import creditRoutes from './routes/creditRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js'
+import passport from './config/passport.js'
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use(passport.initialize());
 app.get('/',(req,res)=>{
     res.send('API is running');
 });

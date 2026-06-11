@@ -8,6 +8,7 @@ import SearchMentors from './pages/SearchMentors';
 import Sessions from './pages/Sessions';
 import Credits from './pages/Credits';
 import Reviews from './pages/Reviews';
+import OAuthSuccess from './pages/OAuthSuccess';
 function App(){
   return (
     <BrowserRouter>
@@ -16,7 +17,10 @@ function App(){
           path="/"
           element={<Login />}
         />
-
+<Route
+  path="/oauth-success"
+  element={<OAuthSuccess />}
+/>
         <Route
           path="/register"
           element={<Register />}

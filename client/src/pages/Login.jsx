@@ -78,6 +78,24 @@ return (
         >
           Login
         </button>
+        <div className="my-4 flex items-center">
+  <div className="flex-grow border-t"></div>
+  <span className="mx-3 text-gray-500">
+    OR
+  </span>
+  <div className="flex-grow border-t"></div>
+</div>
+
+<button
+  type="button"
+  onClick={() => {
+    window.location.href =
+      "http://localhost:5000/api/auth/google";
+  }}
+  className="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-50"
+>
+  Continue with Google
+</button>
       </form>
       <p className="text-center mt-4 text-gray-600">
         Don't have an account?
