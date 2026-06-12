@@ -9,6 +9,7 @@ import Sessions from './pages/Sessions';
 import Credits from './pages/Credits';
 import Reviews from './pages/Reviews';
 import OAuthSuccess from './pages/OAuthSuccess';
+import VideoRoom from './pages/VideoRoom';
 function App(){
   return (
     <BrowserRouter>
@@ -73,6 +74,11 @@ function App(){
       <Reviews />
     </ProtectedRoutes>
   }
+/>
+
+<Route
+  path="/video/:roomId"
+  element={<VideoRoom />}
 />
       </Routes>
     </BrowserRouter>
