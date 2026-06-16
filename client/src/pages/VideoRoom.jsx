@@ -101,9 +101,7 @@ peerRef.current.onicecandidate = (
         console.log(
           "Media stream obtained"
         );
-
         streamRef.current =stream;
-
         localVideoRef.current.srcObject =stream;
 
         stream

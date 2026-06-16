@@ -134,6 +134,19 @@ function Sessions() {
       </button>
     )}
 
+
+{session.status === "accepted" && (
+  <button
+    onClick={() =>
+      navigate(`/video/${session._id}`)
+    }
+    className="bg-purple-600 text-white px-3 py-1 rounded-lg ml-2"
+  >
+    Join Session
+  </button>
+)}
+
+
   {currentUser &&
     session.learnerId?._id === currentUser._id &&
     session.status === "completed" && (
