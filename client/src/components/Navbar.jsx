@@ -49,7 +49,9 @@ function Navbar() {
             <NavLink to="/credits" className={activeLinkClass}>
               Credits
             </NavLink>
-           
+           <NavLink to="/notifications" className={activeLinkClass}>
+              Notifications
+            </NavLink>
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 px-4 py-1.5 rounded-md text-white text-sm font-medium transition shadow-sm"
@@ -107,7 +109,14 @@ function Navbar() {
             </NavLink>
             <NavLink to="/credits" className={mobileLinkClass} onClick={() => setIsOpen(false)}>
               Credits
-            </NavLink>        
+            </NavLink> 
+            <NavLink
+  to="/notifications"
+  className={mobileLinkClass}
+  onClick={() => setIsOpen(false)}
+>
+  Notifications
+</NavLink>       
             <button
               onClick={() => {
                 setIsOpen(false);

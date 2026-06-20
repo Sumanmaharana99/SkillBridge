@@ -1,6 +1,7 @@
 import Session from "../models/Session.js";
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
+import Notification from "../models/Notifications.js";
 export const bookSession = async(req,res)=>{
     try{
         const {mentorId,skill,date} = req.body;
@@ -24,6 +25,17 @@ export const bookSession = async(req,res)=>{
             skill,
             date
         });
+
+        //Send Notificcation to mentor
+        await Notification.create({
+  userId: mentorId,
+
+  type: "SESSION_BOOKED",
+
+  message:
+    "You received a new session booking request.",
+});
+
         learner.credits -= 10;
         await learner.save();
         await Transaction.create({
@@ -101,6 +113,34 @@ export const updateSessionStatus=async(req,res)=>{
 }
  session.status = req.body.status;
         await session.save();
+        //SEND notification when session is accepted to the learner
+      if (req.body.status ==="accepted") {
+  await Notification.create({
+    userId:
+      session.learnerId,
+
+    type:
+      "SESSION_ACCEPTED",
+
+    message:
+      "Your session request has been accepted.",
+  });
+}
+
+//SEND NOTIFICATION TO learner when session is marked completed by the Mentor
+if (req.body.status ==="completed"
+) {
+  await Notification.create({
+    userId:
+      session.learnerId,
+
+    type:
+      "SESSION_COMPLETED",
+
+    message:
+      "Your session has been completed.",
+  });
+}
         res.status(200).json({
             success:true,
             message:"Session status updated successfully",

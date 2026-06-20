@@ -42,6 +42,13 @@ export const createReview = async(req,res)=>{
         const reviews = await Review.find({
   mentorId: session.mentorId,
 });
+//SEND NOTIFICATIONTO THE MENTOR When the learner gives a review
+await Notification.create({
+  userId: session.mentorId,
+  type: "REVIEW_RECEIVED",
+  message:
+    "You received a new review.",
+});
         const avgRating = reviews.reduce((sum,item)=>sum+item.rating,0)/reviews.length;
 
         await User.findByIdAndUpdate(session.mentorId,{rating:avgRating.toFixed(1)});
