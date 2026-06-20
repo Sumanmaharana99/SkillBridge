@@ -218,43 +218,81 @@ return () => {
   }, [roomId]);
 
   return (
-    <div>
-      <h1>Video Room</h1>
+  <div className="min-h-screen bg-gray-900 text-white flex flex-col">
 
-      <p>Room ID: {roomId}</p>
+    {/* Header */}
+    <div className="flex justify-between items-center p-4 border-b border-gray-700">
+      <h1 className="text-2xl font-bold">
+        SkillBridge Video Call
+      </h1>
 
-      <video
-        ref={localVideoRef}
-        autoPlay
-        muted
-        playsInline
-        style={{
-          width: "400px",
-        }}
-      />
-    <video
-  ref={remoteVideoRef}
-  autoPlay
-  playsInline
-  width="400"
-  height="300"
-  style={{
-    border: "2px solid red",
-    background: "black",
-  }}
-/>
-<button onClick={toggleMic}>
-  Toggle Mic
-</button>
-
-<button onClick={toggleCamera}>
-  Toggle Camera
-</button>
-<button onClick={leaveCall}>
-  Leave Call
-</button>
+      <div className="bg-green-600 px-3 py-1 rounded-full text-sm">
+        Room: {roomId}
+      </div>
     </div>
-  );
+
+    {/* Videos */}
+    <div className="flex-1 flex items-center justify-center gap-6 p-6">
+
+      {/* Remote Video */}
+      <div className="relative">
+        <video
+          ref={remoteVideoRef}
+          autoPlay
+          playsInline
+          className="w-[700px] h-[450px] rounded-xl bg-black border border-gray-700 shadow-lg object-cover"
+        />
+
+        <span className="absolute bottom-3 left-3 bg-black/70 px-3 py-1 rounded">
+          Participant
+        </span>
+      </div>
+
+      {/* Local Video */}
+      <div className="relative">
+        <video
+          ref={localVideoRef}
+          autoPlay
+          muted
+          playsInline
+          className="w-[250px] h-[180px] rounded-xl bg-black border border-gray-700 shadow-lg object-cover"
+        />
+
+        <span className="absolute bottom-3 left-3 bg-black/70 px-3 py-1 rounded">
+          You
+        </span>
+      </div>
+
+    </div>
+
+    {/* Controls */}
+    <div className="flex justify-center gap-4 p-6 border-t border-gray-700">
+
+      <button
+        onClick={toggleMic}
+        className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold"
+      >
+        🎤 Mic
+      </button>
+
+      <button
+        onClick={toggleCamera}
+        className="bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-semibold"
+      >
+        📷 Camera
+      </button>
+
+      <button
+        onClick={leaveCall}
+        className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold"
+      >
+        📞 Leave
+      </button>
+
+    </div>
+
+  </div>
+);
 }
 
 export default VideoRoom;

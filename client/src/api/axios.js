@@ -1,6 +1,6 @@
 import axios from 'axios';
 const API = axios.create({
-    baseURL: 'https://skillbridge-k59b.onrender.com/api',
+    baseURL: import.meta.env.VITE_API_URL,
 })
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
