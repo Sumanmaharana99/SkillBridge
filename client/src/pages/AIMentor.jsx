@@ -1,7 +1,9 @@
 import { useState } from "react";
 import API from "../api/axios";
-
+import { useNavigate } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
 function AIMentor() {
+    const navigate = useNavigate();
   const [goal, setGoal] =
     useState("");
 
@@ -37,6 +39,7 @@ function AIMentor() {
     };
 
   return (
+    <MainLayout>
     <div className="max-w-5xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">
         AI Mentor Bot
@@ -62,6 +65,14 @@ function AIMentor() {
           ? "Generating..."
           : "Generate Roadmap"}
       </button>
+      <button
+    onClick={() =>
+      navigate("/ai-chat")
+    }
+    className="bg-green-600 text-white px-6 py-3 rounded-lg"
+  >
+    Open AI Chat
+  </button>
 
       {result && (
   <div className="mt-8 space-y-6">
@@ -190,6 +201,7 @@ function AIMentor() {
   </div>
 )}
     </div>
+    </MainLayout>
   );
 }
 

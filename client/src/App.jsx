@@ -12,6 +12,7 @@ import OAuthSuccess from './pages/OAuthSuccess';
 import VideoRoom from './pages/VideoRoom';
 import Notifications from './pages/Notifications';
 import AIMentor from "./pages/AIMentor";
+import AIChat from './pages/AIChat';
 function App(){
   return (
     <BrowserRouter>
@@ -90,6 +91,10 @@ function App(){
 <Route
   path="/ai-mentor"
   element={<AIMentor />}
+/>
+<Route
+  path="/ai-chat"
+  element={<AIChat />}
 />
       </Routes>
     </BrowserRouter>

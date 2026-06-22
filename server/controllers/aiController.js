@@ -74,3 +74,68 @@ const aiResponse =
       });
     }
   };
+
+
+  export const askAI = async (
+  req,
+  res
+) => {
+  try {
+    const { question } =
+      req.body;
+
+    const response =
+      await axios.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          model:
+            "openai/gpt-oss-20b:free",
+
+          messages: [
+            {
+    role: "system",
+    content: `
+You are SkillBridge AI Mentor.
+
+Rules:
+- Keep answers under 250 words.
+- Be concise and practical.
+- Use bullet points when possible.
+- Do not generate long tutorials.
+- Give actionable next steps.
+- If asked for a roadmap, give 5-7 steps maximum.
+    `
+  },
+            {
+
+              role: "user",
+              content:
+                question,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization:
+              `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            "Content-Type":
+              "application/json",
+          },
+        }
+      );
+
+    res.json({
+      success: true,
+      answer:
+        response.data.choices[0]
+          .message.content,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message:
+        error.message,
+    });
+  }
+};
