@@ -11,6 +11,7 @@ import Reviews from './pages/Reviews';
 import OAuthSuccess from './pages/OAuthSuccess';
 import VideoRoom from './pages/VideoRoom';
 import Notifications from './pages/Notifications';
+import AIMentor from "./pages/AIMentor";
 function App(){
   return (
     <BrowserRouter>
@@ -85,6 +86,10 @@ function App(){
 <Route
   path="/video/:roomId"
   element={<VideoRoom />}
+/>
+<Route
+  path="/ai-mentor"
+  element={<AIMentor />}
 />
       </Routes>
     </BrowserRouter>

@@ -9,6 +9,7 @@ import uploadRoutes from './routes/uploadRoutes.js'
 import passport from './config/passport.js'
 import limiter from './middlewares/rateLimiter.js';
 import notificationRoutes from "./routes/notificationRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -24,4 +25,5 @@ app.use('/api/credits',creditRoutes);
 app.use('/api/reviews',reviewRoutes);
 app.use('/api/upload', uploadRoutes)
 app.use("/api/notifications",notificationRoutes)
+app.use("/api/ai", aiRoutes);
 export default app;

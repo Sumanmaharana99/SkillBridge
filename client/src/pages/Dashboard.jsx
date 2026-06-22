@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
 import MainLayout from "../layouts/MainLayout";
-
+import { Bot } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -163,6 +165,19 @@ function Dashboard() {
             Edit Profile
           </button>
         </div>
+
+        {/* AI Mentor Floating Button */}
+<button
+  onClick={() =>
+    navigate("/ai-mentor")
+  }
+  className="fixed bottom-6 right-6 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition-all duration-300 z-50"
+>
+  <Bot size={22} />
+  <span className="font-medium">
+    AI Mentor
+  </span>
+</button>
       </div>
     </MainLayout>
   );
