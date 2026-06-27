@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateTokens.js';
+import { sendEmailToQueue } from "../queues/emailProducer.js";
 export const register = async (req, res) => {
     try{
         const {name,email,password} = req.body;
@@ -17,6 +18,13 @@ export const register = async (req, res) => {
             email,
             password: hashsedPassword
         })
+        await sendEmailToQueue({
+  to: user.email,
+
+  subject: "Welcome to SkillBridge",
+
+  message: welcomeTemplate(user),
+});
         const token = generateToken(user._id);
         res.status(201).json({
       success: true,

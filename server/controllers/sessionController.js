@@ -2,6 +2,8 @@ import Session from "../models/Session.js";
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 import Notification from "../models/Notifications.js";
+import { sendEmailToQueue } from "../queues/emailProducer.js";
+import { bookingTemplate } from "../templates/bookingEmail.js";
 export const bookSession = async(req,res)=>{
     try{
         const {mentorId,skill,date} = req.body;
@@ -12,7 +14,7 @@ export const bookSession = async(req,res)=>{
   });
 }
         const learner = await User.findById(req.user._id);
-
+         const mentor = await User.findById(mentorId);
         if(learner.credits < 10){
             return res.status(400).json({
                 success:false,
@@ -45,6 +47,20 @@ export const bookSession = async(req,res)=>{
             sessionId: session._id,
             description: "Booked learning session"
         });
+
+        //Queue rabbitMQ
+        await sendEmailToQueue({
+    to: learner.email,
+
+    subject: "SkillBridge | Session Booked Successfully",
+
+    message: bookingTemplate(
+        learner,
+        mentor,
+        skill,
+        date
+    )
+});
         res.status(201).json({
             success:true,
             message:"Session booked successfully",

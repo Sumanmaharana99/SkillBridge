@@ -4,8 +4,12 @@ import connectDB from './config/db.js';
 import http from "http"
 import "./config/redis.js"
 import {Server} from "socket.io";
+import { connectRabbitMQ } from "./config/rabbitmq.js";
+import { consumeEmails } from "./queues/emailConsumer.js";
 dotenv.config();
 connectDB();
+await connectRabbitMQ();
+await consumeEmails();
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);
 
