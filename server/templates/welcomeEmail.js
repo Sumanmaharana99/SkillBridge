@@ -2,7 +2,7 @@ export const welcomeTemplate = (user) => {
   return `
 Hi ${user.name},
 
-🎉 Welcome to SkillBridge!
+Welcome to SkillBridge!
 
 Your account has been created successfully, and we're excited to have you join our learning community.
 

@@ -3,6 +3,7 @@ import {register,login,getMe} from '../controllers/authController.js';
 import protect from '../middlewares/authMiddleware.js';
 import generateToken from '../utils/generateTokens.js';
 import passport from 'passport'
+import { welcomeTemplate } from "../templates/welcomeEmail.js";
 const router = express.Router();
 
 router.post('/register',register);
