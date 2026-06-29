@@ -18,8 +18,11 @@ export const consumeEmails = async () => {
         await sendEmail(emailData);
         channel.ack(msg);
       } catch (error) {
-        console.log(error);
-      }
+  console.error("Email sending failed:");
+  console.error(error);
+
+  channel.nack(msg, false, false);
+}
     }
   );
 };

@@ -18,6 +18,13 @@ export const sendEmail = async ({
     subject,
     text: message,
   });
+  transporter.verify((error, success) => {
+  if (error) {
+    console.error("Transport Error:", error);
+  } else {
+    console.log("SMTP Server Ready");
+  }
+});
 
   console.log("Email Sent");
 };
