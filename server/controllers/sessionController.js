@@ -4,6 +4,8 @@ import Transaction from "../models/Transaction.js";
 import Notification from "../models/Notifications.js";
 import { sendEmailToQueue } from "../queues/emailProducer.js";
 import { bookingTemplate } from "../templates/bookingEmail.js";
+import { sessionAcceptedTemplate } from "../templates/sessionAcceptedEmail.js";
+import { sessionCompletedTemplate } from "../templates/sessionCompletedEmail.js";
 export const bookSession = async(req,res)=>{
     try{
         const {mentorId,skill,date} = req.body;
@@ -92,6 +94,9 @@ export const updateSessionStatus=async(req,res)=>{
       });
     }
 
+const mentor = await User.findById(session.mentorId);
+const learner = await User.findById(session.learnerId);
+
     const allowedStatus = [
       "accepted",
       "completed",
@@ -110,10 +115,6 @@ export const updateSessionStatus=async(req,res)=>{
   req.body.status === "completed" &&
   session.status !== "completed"
 ) {
-  const mentor = await User.findById(
-    session.mentorId
-  );
-
   mentor.credits += 10;
 
   await mentor.save();
@@ -141,6 +142,23 @@ export const updateSessionStatus=async(req,res)=>{
     message:
       "Your session request has been accepted.",
   });
+  try{
+await sendEmailToQueue({
+  to: learner.email,
+
+  subject: "Your SkillBridge Session Has Been Accepted",
+
+  message: sessionAcceptedTemplate(
+    learner,
+    mentor,
+    session.skill,
+    session.date
+  ),
+});
+  }catch(error){
+    console.error("Failed to queue email:", error);
+  }
+  
 }
 
 //SEND NOTIFICATION TO learner when session is marked completed by the Mentor
@@ -156,6 +174,32 @@ if (req.body.status ==="completed"
     message:
       "Your session has been completed.",
   });
+  try {
+
+  await sendEmailToQueue({
+
+    to: learner.email,
+
+    subject:
+      " Session Completed Successfully",
+
+    message:
+      sessionCompletedTemplate(
+        learner,
+        mentor,
+        session.skill
+      )
+
+  });
+
+} catch (error) {
+
+  console.error(
+    "Failed to queue completed session email:",
+    error
+  );
+
+}
 }
         res.status(200).json({
             success:true,
