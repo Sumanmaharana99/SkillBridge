@@ -92,7 +92,23 @@ function Register() {
           Create Account
         </button>
       </form>
-
+      <div className="my-4 flex items-center">
+  <div className="flex-grow border-t"></div>
+  <span className="mx-3 text-gray-500">
+    OR
+  </span>
+  <div className="flex-grow border-t"></div>
+</div>
+  <button
+  type="button"
+  onClick={() => {
+    window.location.href =
+       "https://skillbridge-k59b.onrender.com/api/auth/google";
+  }}
+  className="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-50"
+>
+  Continue with Google
+</button>
       <p className="text-center mt-4 text-gray-600">
         Already have an account?
         <span
