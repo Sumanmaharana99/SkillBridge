@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateTokens.js';
 import { sendEmailToQueue } from "../queues/emailProducer.js";
+import { welcomeTemplate } from "../templates/welcomeEmail.js";
 export const register = async (req, res) => {
     try{
         const {name,email,password} = req.body;
