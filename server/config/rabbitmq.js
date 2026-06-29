@@ -3,6 +3,7 @@ import amqp from "amqplib";
 let channel;
 export const connectRabbitMQ = async()=>{
     try{
+        console.log("RabbitMQ URL:", process.env.RABBITMQ_URL);
 const connection = await amqp.connect(process.env.RABBITMQ_URL);
     channel = await connection.createChannel();
     await channel.assertQueue("emailQueue",{
